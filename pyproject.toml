@@ -10,7 +10,7 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 authors = [
-    { name = "Shuto Inoue", email = "shuto@example.com" },
+    { name = "techino35" },
 ]
 keywords = ["ai", "git", "blame", "code-quality", "developer-tools"]
 classifiers = [
@@ -36,9 +36,9 @@ dependencies = [
 aidiff = "aidiff.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/inoue-shuto/aidiff"
-Repository = "https://github.com/inoue-shuto/aidiff"
-Issues = "https://github.com/inoue-shuto/aidiff/issues"
+Homepage = "https://github.com/techino35/aidiff"
+Repository = "https://github.com/techino35/aidiff"
+Issues = "https://github.com/techino35/aidiff/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["aidiff"]

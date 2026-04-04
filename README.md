@@ -3,6 +3,7 @@
 > Track which lines in your codebase were written by AI.
 
 [![PyPI version](https://img.shields.io/pypi/v/aidiff.svg)](https://pypi.org/project/aidiff/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/aidiff.svg)](https://pypi.org/project/aidiff/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ![aidiff demo](https://via.placeholder.com/800x400?text=aidiff+demo+GIF+coming+soon)
