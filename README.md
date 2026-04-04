@@ -94,7 +94,7 @@ aidiff stores data in `.aidiff/data.json` in your repo root. This file is meant 
 
 > Early supporters get priority features and direct input on the roadmap.
 
-[Become a Sponsor](https://github.com/sponsors/inoue-shuto) to unlock:
+[Become a Sponsor](https://github.com/sponsors/techino35) to unlock:
 
 - Custom detection rules
 - Team dashboard
