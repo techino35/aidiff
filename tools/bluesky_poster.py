@@ -1,10 +1,10 @@
 """
-Bluesky自動投稿スクリプト
-使い方:
-  python tools/bluesky_poster.py tips          # Tipsをランダム投稿
-  python tools/bluesky_poster.py release 0.1.2 # リリース告知
-  python tools/bluesky_poster.py star 100      # starマイルストーン
-  python tools/bluesky_poster.py custom "文章" # カスタム投稿
+Bluesky auto-post script
+Usage:
+  python tools/bluesky_poster.py tips              # Random tips post
+  python tools/bluesky_poster.py release 0.1.2     # Release announcement
+  python tools/bluesky_poster.py star 100          # Star milestone
+  python tools/bluesky_poster.py custom "text"     # Custom post
 """
 
 import os
@@ -19,28 +19,29 @@ HANDLE = os.getenv("BLUESKY_HANDLE")
 PASSWORD = os.getenv("BLUESKY_APP_PASSWORD")
 
 TIPS = [
-    "💡 aidiff tip: `aidiff scan` でリポジトリ全体のAIコード率を一発確認。どのファイルがAI生成か可視化できます。\n\npip install aidiff\ngithub.com/techino35/aidiff",
-    "💡 aidiff tip: `aidiff track <file>` で行レベルのAIスコアを表示。レビュー時に「ここはAIが書いた」が一目でわかる。\n\npip install aidiff\ngithub.com/techino35/aidiff",
-    "💡 aidiff tip: `aidiff install` でpre-commitフックをセット。コミットごとに自動でAIコード率を記録します。\n\npip install aidiff\ngithub.com/techino35/aidiff",
-    "💡 aidiff tip: `aidiff report` でHTMLレポート生成。AIコード率のトレンド・ファイル別ヒートマップを可視化。\n\npip install aidiff\ngithub.com/techino35/aidiff",
-    "💡 aidiff tip: GitHub Actionsに組み込めばPRごとにAIコード率をコメント。`aidiff init-action` で設定ファイルを自動生成。\n\npip install aidiff\ngithub.com/techino35/aidiff",
-    "AI生成コードが増えてるのに、誰も追跡していない。\n\ngit blameで「誰が書いたか」はわかる。でも「AIが書いたか」はわからない。\n\naidiffはその空白を埋めるOSS。\n\npip install aidiff\ngithub.com/techino35/aidiff",
-    "Claude Code / Cursor / Copilot を使うチームへ。\n\nどのファイルがほぼAI生成か把握してますか？\n\naidiffを使えば `aidiff scan` 一発でわかります。\n\npip install aidiff",
+    "aidiff tip: Run `aidiff scan` to instantly see your repo's AI code ratio. Know exactly which files are mostly AI-generated.\n\npip install aidiff\ngithub.com/techino35/aidiff",
+    "aidiff tip: `aidiff track <file>` shows AI scores line by line. Reviewers can instantly see which lines were written by AI.\n\npip install aidiff\ngithub.com/techino35/aidiff",
+    "aidiff tip: `aidiff install` sets up a pre-commit hook. AI code ratio is recorded automatically on every commit.\n\npip install aidiff\ngithub.com/techino35/aidiff",
+    "aidiff tip: `aidiff report` generates an HTML dashboard with AI ratio trends, file heatmaps, and contributor breakdown.\n\npip install aidiff\ngithub.com/techino35/aidiff",
+    "aidiff tip: `aidiff init-action` generates a GitHub Action that auto-comments AI code ratio on every PR. Zero config.\n\npip install aidiff\ngithub.com/techino35/aidiff",
+    "AI-generated code is everywhere. Nobody is tracking it.\n\ngit blame tells you who wrote it. But not whether AI wrote it.\n\naidiff fills that gap.\n\npip install aidiff\ngithub.com/techino35/aidiff",
+    "Using Claude Code, Cursor, or Copilot?\n\nDo you know which files in your repo are mostly AI-generated?\n\n`aidiff scan` tells you in seconds.\n\npip install aidiff\ngithub.com/techino35/aidiff",
+    "Studies show AI-assisted PRs have ~30% higher change failure rate.\n\nKnowing which code is AI-generated helps you review smarter.\n\naidiff makes AI code visible.\n\npip install aidiff\ngithub.com/techino35/aidiff",
 ]
 
-RELEASE_TEMPLATE = """🚀 aidiff v{version} リリース
+RELEASE_TEMPLATE = """aidiff v{version} released
 
-git blameのAI版。どのコードがAIに書かれたか追跡するOSSです。
+git blame for AI-generated code. Track, score, and visualize how much of your codebase was written by AI.
 
 pip install aidiff=={version}
 
-詳細: github.com/techino35/aidiff"""
+github.com/techino35/aidiff"""
 
-STAR_TEMPLATE = """⭐ aidiff が {stars} stars を達成しました！
+STAR_TEMPLATE = """aidiff just hit {stars} stars!
 
-応援してくれた皆さんありがとうございます。
+Thank you to everyone who supported this project.
 
-AIコード追跡ツールとして開発を続けます。
+We'll keep building the best AI code tracking tool out there.
 
 github.com/techino35/aidiff"""
 
@@ -54,7 +55,7 @@ def post(text: str) -> None:
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print("使い方: python bluesky_poster.py [tips|release|star|custom]")
+        print("Usage: python bluesky_poster.py [tips|release|star|custom]")
         sys.exit(1)
 
     mode = sys.argv[1]
@@ -70,11 +71,11 @@ def main() -> None:
     elif mode == "custom":
         text = sys.argv[2] if len(sys.argv) > 2 else ""
         if not text:
-            print("テキストを指定してください")
+            print("Specify text.")
             sys.exit(1)
         post(text)
     else:
-        print(f"不明なモード: {mode}")
+        print(f"Unknown mode: {mode}")
         sys.exit(1)
 
 
