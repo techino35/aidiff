@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pyo
+.aidiff/
+dist/
+*.egg-info/
+.venv/
+venv/
+.env
