@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aidiff Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .card { @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">
+                <span class="text-indigo-600">aidiff</span> Report
+            </h1>
+            <p class="text-gray-500 mt-1">Generated {{ generated_at }}</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <p class="text-sm text-gray-500">AI Code Ratio</p>
+                <p class="text-3xl font-bold {% if ai_ratio > 70 %}text-red-600{% elif ai_ratio > 40 %}text-yellow-600{% else %}text-green-600{% endif %}">
+                    {{ ai_ratio }}%
+                </p>
+                <p class="text-xs text-gray-400 mt-1">{{ ai_lines }} / {{ total_lines }} lines</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <p class="text-sm text-gray-500">Files Analyzed</p>
+                <p class="text-3xl font-bold text-gray-900">{{ total_files }}</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <p class="text-sm text-gray-500">AI Commits</p>
+                <p class="text-3xl font-bold text-indigo-600">{{ ai_commits }}</p>
+                <p class="text-xs text-gray-400 mt-1">{{ ai_commit_ratio }}% of {{ total_commits }} commits</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <p class="text-sm text-gray-500">Total Lines</p>
+                <p class="text-3xl font-bold text-gray-900">{{ total_lines }}</p>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- File AI Score Heatmap -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">AI Score by File</h2>
+                <div style="height:240px;"><canvas id="fileChart"></canvas></div>
+            </div>
+
+            <!-- Commit Timeline -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">AI Commits Timeline</h2>
+                <div style="height:240px;"><canvas id="commitChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Contributor Chart -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">AI Usage by Contributor</h2>
+            <div style="height:160px;"><canvas id="contributorChart"></canvas></div>
+        </div>
+
+        <!-- File Table -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">File Details</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left py-3 px-2 text-gray-600">File</th>
+                            <th class="text-right py-3 px-2 text-gray-600">Lines</th>
+                            <th class="text-right py-3 px-2 text-gray-600">AI Lines</th>
+                            <th class="text-right py-3 px-2 text-gray-600">AI %</th>
+                            <th class="text-left py-3 px-2 text-gray-600 w-48">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for f in file_stats %}
+                        <tr class="border-b border-gray-50 hover:bg-gray-50">
+                            <td class="py-2 px-2 font-mono text-xs">{{ f.path }}</td>
+                            <td class="py-2 px-2 text-right">{{ f.total_lines }}</td>
+                            <td class="py-2 px-2 text-right">{{ f.ai_lines }}</td>
+                            <td class="py-2 px-2 text-right font-medium
+                                {% if f.ai_score > 0.7 %}text-red-600
+                                {% elif f.ai_score > 0.4 %}text-yellow-600
+                                {% else %}text-green-600{% endif %}">
+                                {{ (f.ai_score * 100) | round(1) }}%
+                            </td>
+                            <td class="py-2 px-2">
+                                <div class="w-full bg-gray-100 rounded-full h-2">
+                                    <div class="h-2 rounded-full
+                                        {% if f.ai_score > 0.7 %}bg-red-500
+                                        {% elif f.ai_score > 0.4 %}bg-yellow-500
+                                        {% else %}bg-green-500{% endif %}"
+                                        style="width: {{ (f.ai_score * 100) | round(1) }}%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Commits -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Recent Commits</h2>
+            <div class="space-y-2">
+                {% for c in recent_commits %}
+                <div class="flex items-center gap-3 py-2 border-b border-gray-50">
+                    <code class="text-xs text-gray-400 font-mono">{{ c.sha }}</code>
+                    {% if c.is_ai %}
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-indigo-100 text-indigo-700">AI</span>
+                    {% endif %}
+                    <span class="text-sm text-gray-700 flex-1 truncate">{{ c.message }}</span>
+                    <span class="text-xs text-gray-400">{{ c.author }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-sm text-gray-400">
+            Generated by <a href="https://github.com/inoue-shuto/aidiff" class="text-indigo-500 hover:underline">aidiff</a>
+        </div>
+    </div>
+
+    <script>
+        // File AI Score Chart
+        new Chart(document.getElementById('fileChart'), {
+            type: 'bar',
+            data: {
+                labels: {{ file_labels | tojson }},
+                datasets: [{
+                    label: 'AI Score %',
+                    data: {{ file_scores | tojson }},
+                    backgroundColor: {{ file_scores | tojson }}.map(v =>
+                        v > 70 ? 'rgba(239, 68, 68, 0.7)' :
+                        v > 40 ? 'rgba(234, 179, 8, 0.7)' :
+                        'rgba(34, 197, 94, 0.7)'
+                    ),
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { max: 100, title: { display: true, text: 'AI Score %' } },
+                }
+            }
+        });
+
+        // Commit Timeline Chart
+        new Chart(document.getElementById('commitChart'), {
+            type: 'bar',
+            data: {
+                labels: {{ commit_labels | tojson }},
+                datasets: [{
+                    label: 'AI Commit',
+                    data: {{ commit_ai | tojson }},
+                    backgroundColor: {{ commit_ai | tojson }}.map(v =>
+                        v ? 'rgba(99, 102, 241, 0.7)' : 'rgba(209, 213, 219, 0.5)'
+                    ),
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { max: 1, ticks: { callback: v => v ? 'AI' : 'Human' } },
+                }
+            }
+        });
+
+        // Contributor Chart
+        new Chart(document.getElementById('contributorChart'), {
+            type: 'bar',
+            data: {
+                labels: {{ contributor_labels | tojson }},
+                datasets: [{
+                    label: 'AI Usage %',
+                    data: {{ contributor_ai_rates | tojson }},
+                    backgroundColor: 'rgba(99, 102, 241, 0.7)',
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { max: 100, title: { display: true, text: 'AI Usage %' } },
+                }
+            }
+        });
+    </script>
+</body>
+</html>
