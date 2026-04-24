@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="420" viewBox="0 0 740 420">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .terminal-bg { fill: #161b22; rx: 8; }
+      .bar { fill: #30363d; }
+      .title-bar { fill: #21262d; }
+      .dot-red { fill: #ff5f57; }
+      .dot-yellow { fill: #febc2e; }
+      .dot-green { fill: #28c840; }
+      .prompt { fill: #7ee787; font-family: 'Courier New', monospace; font-size: 13px; }
+      .cmd { fill: #e6edf3; font-family: 'Courier New', monospace; font-size: 13px; }
+      .ai-label { fill: #79c0ff; font-family: 'Courier New', monospace; font-size: 12px; }
+      .human-label { fill: #56d364; font-family: 'Courier New', monospace; font-size: 12px; }
+      .dim { fill: #8b949e; font-family: 'Courier New', monospace; font-size: 12px; }
+      .header { fill: #f0f6fc; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; }
+      .bar-ai { fill: #388bfd; }
+      .bar-human { fill: #56d364; }
+      .pct-high { fill: #f85149; font-family: 'Courier New', monospace; font-size: 12px; }
+      .pct-mid { fill: #e3b341; font-family: 'Courier New', monospace; font-size: 12px; }
+      .pct-low { fill: #56d364; font-family: 'Courier New', monospace; font-size: 12px; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="740" height="420" rx="12" class="bg"/>
+
+  <!-- Terminal window -->
+  <rect x="20" y="20" width="700" height="380" rx="8" fill="#161b22"/>
+
+  <!-- Title bar -->
+  <rect x="20" y="20" width="700" height="36" rx="8" fill="#21262d"/>
+  <rect x="20" y="44" width="700" height="12" fill="#21262d"/>
+
+  <!-- Window dots -->
+  <circle cx="44" cy="38" r="6" class="dot-red"/>
+  <circle cx="64" cy="38" r="6" class="dot-yellow"/>
+  <circle cx="84" cy="38" r="6" class="dot-green"/>
+
+  <!-- Window title -->
+  <text x="370" y="43" text-anchor="middle" fill="#8b949e" font-family="'Courier New', monospace" font-size="12px">aidiff — terminal</text>
+
+  <!-- Line 1: prompt + command -->
+  <text x="36" y="82" class="prompt" opacity="0">
+    <tspan>$</tspan>
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="0.3s" fill="freeze"/>
+  </text>
+  <text x="50" y="82" class="cmd" opacity="0">
+    aidiff status
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="0.5s" fill="freeze"/>
+  </text>
+
+  <!-- Separator -->
+  <text x="36" y="102" class="dim" opacity="0">
+    ──────────────────────────────────────────────────────
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="0.8s" fill="freeze"/>
+  </text>
+
+  <!-- Header: AI Code Analysis -->
+  <text x="36" y="122" fill="#79c0ff" font-family="'Courier New', monospace" font-size="13px" font-weight="bold" opacity="0">
+    🤖 AI Code Analysis — my-project
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="0.9s" fill="freeze"/>
+  </text>
+
+  <!-- Stats row -->
+  <text x="36" y="146" class="dim" opacity="0">
+    Total files: 48   Commits analyzed: 127   Last scan: just now
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="1.1s" fill="freeze"/>
+  </text>
+
+  <!-- Big ratio bar -->
+  <!-- Background bar -->
+  <rect x="36" y="158" width="480" height="14" rx="3" fill="#30363d" opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="1.3s" fill="freeze"/>
+  </rect>
+  <!-- AI portion animated -->
+  <rect x="36" y="158" width="0" height="14" rx="3" fill="#388bfd" opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="1.3s" fill="freeze"/>
+    <animate attributeName="width" values="0;182" dur="0.8s" begin="1.4s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </rect>
+  <!-- Human portion animated -->
+  <rect x="218" y="158" width="0" height="14" rx="3" fill="#56d364" opacity="0">
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="1.3s" fill="freeze"/>
+    <animate attributeName="width" values="0;298" dur="0.8s" begin="1.4s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </rect>
+
+  <text x="526" y="170" class="ai-label" opacity="0">
+    AI: 37.9%  Human: 62.1%
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="2.3s" fill="freeze"/>
+  </text>
+
+  <!-- Table header -->
+  <text x="36" y="198" class="dim" opacity="0">
+    ──────────────────────────────────────────────────────
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="2.5s" fill="freeze"/>
+  </text>
+  <text x="36" y="214" class="header" opacity="0">
+    File                          AI%    Lines  Status
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="2.6s" fill="freeze"/>
+  </text>
+  <text x="36" y="228" class="dim" opacity="0">
+    ──────────────────────────────────────────────────────
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="2.7s" fill="freeze"/>
+  </text>
+
+  <!-- Row 1 -->
+  <text x="36" y="244" class="cmd" opacity="0">
+    app/auth.py                   <tspan class="pct-high">81%</tspan>    142    ⚠ High AI
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="2.8s" fill="freeze"/>
+  </text>
+
+  <!-- Row 2 -->
+  <text x="36" y="260" class="cmd" opacity="0">
+    app/services/ocr.py           <tspan class="pct-mid">54%</tspan>     98    ~ Mid AI
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="2.95s" fill="freeze"/>
+  </text>
+
+  <!-- Row 3 -->
+  <text x="36" y="276" class="cmd" opacity="0">
+    app/core/config.py            <tspan class="pct-low">12%</tspan>     67    ✓ Low AI
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="3.1s" fill="freeze"/>
+  </text>
+
+  <!-- Row 4 -->
+  <text x="36" y="292" class="cmd" opacity="0">
+    app/db/models.py              <tspan class="pct-low">23%</tspan>     89    ✓ Low AI
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="3.25s" fill="freeze"/>
+  </text>
+
+  <!-- Row 5 -->
+  <text x="36" y="308" class="cmd" opacity="0">
+    tests/test_company_matcher.py  <tspan class="pct-high">91%</tspan>    203    ⚠ High AI
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="3.4s" fill="freeze"/>
+  </text>
+
+  <!-- Separator -->
+  <text x="36" y="328" class="dim" opacity="0">
+    ──────────────────────────────────────────────────────
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="3.55s" fill="freeze"/>
+  </text>
+
+  <!-- Summary -->
+  <text x="36" y="348" fill="#e6edf3" font-family="'Courier New', monospace" font-size="12px" opacity="0">
+    💡 Tip: Run <tspan fill="#79c0ff">aidiff report</tspan> to generate an HTML dashboard
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="3.7s" fill="freeze"/>
+  </text>
+
+  <!-- Prompt 2 -->
+  <text x="36" y="372" class="prompt" opacity="0">
+    $
+    <animate attributeName="opacity" values="0;1" dur="0.1s" begin="3.9s" fill="freeze"/>
+  </text>
+  <!-- Cursor blink -->
+  <rect x="50" y="360" width="8" height="14" fill="#7ee787" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" dur="1s" begin="3.9s" repeatCount="indefinite"/>
+  </rect>
+</svg>

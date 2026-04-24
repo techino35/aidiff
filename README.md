@@ -6,7 +6,7 @@
 [![PyPI downloads](https://img.shields.io/pypi/dm/aidiff.svg)](https://pypi.org/project/aidiff/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-![aidiff demo](https://via.placeholder.com/800x400?text=aidiff+demo+GIF+coming+soon)
+![aidiff demo](docs/demo.svg)
 
 ---
 
@@ -91,16 +91,23 @@ Automatically runs `aidiff scan` before each commit, keeping `.aidiff/data.json`
 
 aidiff stores data in `.aidiff/data.json` in your repo root. This file is meant to be committed and shared with your team.
 
-## Insiders
+## Sponsors
 
-> Early supporters get priority features and direct input on the roadmap.
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/techino35?style=flat&logo=github&label=Sponsors)](https://github.com/sponsors/techino35)
 
-[Become a Sponsor](https://github.com/sponsors/techino35) to unlock:
+**aidiff** is free and open source. If it saves you time, consider sponsoring to keep development going.
 
-- Custom detection rules
-- Team dashboard
-- Slack/Discord notifications
-- Priority support
+[Become a Sponsor on GitHub](https://github.com/sponsors/techino35)
+
+### Sponsor Tiers
+
+| Tier | Monthly | Benefits |
+|------|---------|----------|
+| Supporter | $5 | Supporter badge in README + sincere gratitude |
+| Contributor | $20 | All above + priority issue response (48h SLA) |
+| Sponsor | $50 | All above + feature request voting rights |
+
+> Current sponsors get early access to team features: custom detection rules, team dashboard, Slack/Discord notifications.
 
 ## License
 

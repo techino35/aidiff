@@ -1,0 +1,26 @@
+name: Bluesky Tips Auto Post
+
+on:
+  schedule:
+    - cron: "0 13 * * 1"  # 月曜 22:00 JST
+    - cron: "0 13 * * 4"  # 木曜 22:00 JST
+  workflow_dispatch:       # 手動実行も可
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install atproto python-dotenv
+
+      - name: Post tips to Bluesky
+        env:
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+        run: python tools/bluesky_poster.py tips
