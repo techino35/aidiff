@@ -6,8 +6,6 @@
 [![PyPI downloads](https://img.shields.io/pypi/dm/aidiff.svg)](https://pypi.org/project/aidiff/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-![aidiff demo](https://via.placeholder.com/800x400?text=aidiff+demo+GIF+coming+soon)
-
 ---
 
 **aidiff** is `git blame` for AI-generated code. It tracks, scores, and visualizes how much of your codebase was written by AI assistants like Copilot, Claude, ChatGPT, and Cursor.
